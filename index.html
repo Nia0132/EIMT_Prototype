@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EIMT — Ekosistem Informasi Moneter Terpadu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-bar"></div>
+
+  <!-- NAVBAR -->
+  <nav role="navigation" aria-label="Navigasi utama">
+    <div class="nav-brand">EIMT <span class="brand-go">go.id</span></div>
+    <button class="hamburger" aria-label="Buka menu navigasi" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#data-moneter" class="nav-link">Data Moneter</a></li>
+      <li><a href="#aset-digital" class="nav-link">Aset Digital</a></li>
+      <li><a href="#literasi" class="nav-link">Literasi</a></li>
+      <li><a href="#kebijakan" class="nav-link">Kebijakan</a></li>
+      <li><a href="#laporkan" class="nav-link">Laporkan</a></li>
+    </ul>
+    <button class="portal-btn" id="portalBtn" aria-label="Masuk ke portal internal">
+      Portal Internal
+    </button>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1>
+        <span id="typewriterText"></span><span class="typewriter-cursor">|</span>
+      </h1>
+      <p class="hero-subtitle">Informasi moneter resmi dari Bank Indonesia, OJK, dan Kominfo. Merata. Real-time. Terpercaya.</p>
+      <div class="hero-badges">
+        <div class="badge">🏛 Bank Indonesia</div>
+        <div class="badge">📋 OJK</div>
+        <div class="badge">📡 Kominfo</div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="smoothScrollTo('#data-moneter')">Lihat Data Sekarang</button>
+        <button class="btn btn-secondary" onclick="smoothScrollTo('#literasi')">Pelajari EIMT</button>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      Gulir ke bawah ↓
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-content">
+      <div class="ticker-item">
+        <span class="ticker-badge">DATA SIMULASI</span>
+      </div>
+      <div class="ticker-item">
+        <span>USD/IDR: Rp 16.245</span>
+        <span class="negative">▼ -0,12%</span>
+      </div>
+      <div class="ticker-item">
+        <span>BI Rate: 6,25%</span>
+        <span>→</span>
+      </div>
+      <div class="ticker-item">
+        <span>Inflasi Mei 2025: 2,84% (yoy)</span>
+      </div>
+      <div class="ticker-item">
+        <span>Cadangan Devisa: USD 144,0 Miliar</span>
+      </div>
+      <div class="ticker-item">
+        <span>EUR/IDR: Rp 17.680</span>
+        <span class="positive">▲ +0,08%</span>
+      </div>
+      <div class="ticker-item">
+        <span>SGD/IDR: Rp 12.105</span>
+        <span class="negative">▼ -0,05%</span>
+      </div>
+      <div class="ticker-item">
+        <span>Diperbarui: SIMULASI</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="ticker-item">
+        <span class="ticker-badge">DATA SIMULASI</span>
+      </div>
+      <div class="ticker-item">
+        <span>USD/IDR: Rp 16.245</span>
+        <span class="negative">▼ -0,12%</span>
+      </div>
+      <div class="ticker-item">
+        <span>BI Rate: 6,25%</span>
+        <span>→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner" id="statusBanner"></div>
+
+  <!-- SECTION: DATA MONETER -->
+  <section id="data-moneter">
+    <div class="section-header">
+      <div class="section-label">DATA RESMI · BANK INDONESIA</div>
+      <h2 class="section-title">Indikator Moneter Utama</h2>
+      <p class="section-subtitle">Data simulasi · Diperbarui setiap hari kerja</p>
+    </div>
+
+    <div class="data-grid">
+      <div class="data-card" data-delay="0" data-source="live">
+        <div class="data-icon">💵</div>
+        <h3>Kurs USD/IDR</h3>
+        <div class="data-value">Rp 16.245</div>
+        <div class="data-change">
+          <span class="negative">▼ -0,12%</span>
+          <span>dari kemarin</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="100" data-source="live">
+        <div class="data-icon">📊</div>
+        <h3>BI Rate (Suku Bunga Acuan)</h3>
+        <div class="data-value">6,25%</div>
+        <div class="data-change">
+          <span>→ Tidak berubah</span>
+        </div>
+        <p style="font-size: var(--text-xs); color: var(--gray-500); margin: 8px 0;">Keputusan RDG Mei 2025</p>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="200" data-source="live">
+        <div class="data-icon">📈</div>
+        <h3>Inflasi (yoy)</h3>
+        <div class="data-value">2,84%</div>
+        <div class="data-change">
+          <span class="positive">▲ +0,11%</span>
+          <span>dari bulan lalu</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="300" data-source="live">
+        <div class="data-icon">🏦</div>
+        <h3>Cadangan Devisa</h3>
+        <div class="data-value">USD 144,0 Miliar</div>
+        <div class="data-change">
+          <span class="positive">▲ +USD 0,8 Miliar</span>
+          <span>dari bulan lalu</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+    </div>
+
+    <div class="disclaimer-box">
+      ⚠ Seluruh data pada halaman ini adalah simulasi untuk keperluan demonstrasi. Data resmi tersedia di <strong>bi.go.id</strong> dan <strong>ojk.go.id</strong>.
+    </div>
+  </section>
+
+  <!-- SECTION: ASET DIGITAL -->
+  <section id="aset-digital">
+    <div class="section-header">
+      <div class="section-label">REGULASI · OJK & BAPPEBTI</div>
+      <h2 class="section-title">Aset Digital di Indonesia</h2>
+      <p class="section-subtitle">Pahami regulasi sebelum berinvestasi</p>
+    </div>
+
+    <div class="asset-layout">
+      <div class="form-section">
+        <h3>Pertanyaan Umum</h3>
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apa itu aset kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Aset kripto adalah aset digital yang menggunakan kriptografi untuk mengamankan transaksi. Di Indonesia, aset kripto diatur oleh Bappebti sebagai komoditas digital, bukan alat pembayaran yang sah.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apakah kripto legal di Indonesia?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Perdagangan aset kripto legal di Indonesia melalui bursa yang terdaftar di Bappebti. Namun, kripto BUKAN alat pembayaran sah. Bank Indonesia melarang penggunaan kripto sebagai alat bayar.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apa risiko berinvestasi kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Volatilitas tinggi, risiko kehilangan seluruh modal, potensi penipuan, dan tidak ada jaminan pemerintah. Selalu gunakan bursa terdaftar dan jangan investasikan dana yang tidak mampu hilang.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Bagaimana cara cek legalitas bursa kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Cek daftar bursa kripto legal di situs resmi Bappebti (bappebti.go.id). Jangan percaya platform yang tidak terdaftar.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <div class="status-card">
+          <div class="status-badge">DIATUR</div>
+          <div class="status-content">
+            <p><strong>Regulator:</strong> Bappebti (perdagangan) · OJK (aset keuangan)</p>
+            <p><strong>Bursa Terdaftar:</strong> 12 platform (simulasi)</p>
+            <p><strong>Aset Legal:</strong> 501 jenis aset (simulasi)</p>
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 16px 0;">
+            <p style="color: var(--red); margin-top: 16px; font-weight: 600;">
+              ⚠ BUKAN alat pembayaran sah di Indonesia (UU No. 7 Tahun 2011)
+            </p>
+          </div>
+        </div>
+
+        <div class="warning-card">
+          <h4>🚨 Ciri-ciri Penipuan Kripto</h4>
+          <ul>
+            <li>Menjanjikan keuntungan pasti</li>
+            <li>Tidak terdaftar di Bappebti</li>
+            <li>Tekanan untuk segera bergabung</li>
+            <li>Skema referral tidak jelas</li>
+          </ul>
+          <button class="btn btn-primary" style="width: 100%; margin-top: 16px; background: var(--red); color: white;" onclick="smoothScrollTo('#laporkan')">Laporkan ke OJK</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LITERASI KEUANGAN -->
+  <section id="literasi">
+    <div class="section-header">
+      <div class="section-label">PROGRAM NASIONAL · OJK GENCARKAN</div>
+      <h2 class="section-title">Tingkatkan Literasi Keuanganmu</h2>
+      <p class="section-subtitle">Dari dasar hingga mahir, belajar kapan saja dan di mana saja</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-number">66,46%</div>
+        <div class="stat-label">Literasi Nasional (SNLIK 2025 sim.)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Modul Tersedia</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Gratis</div>
+        <div class="stat-label">100% Tanpa Biaya</div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card" data-delay="0" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Pemula</span>
+        <h3>Dasar-Dasar Inflasi</h3>
+        <p class="module-desc">Apa itu inflasi, bagaimana mengukurnya, dan apa dampaknya pada daya beli kamu sehari-hari.</p>
+        <div class="module-meta">
+          <span>~15 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="100" style="border-top-color: var(--teal);">
+        <span class="module-level" style="background: #D1E7E1; color: var(--teal);">Pemula</span>
+        <h3>Memahami Suku Bunga BI</h3>
+        <p class="module-desc">Kenapa BI Rate naik turun? Apa hubungannya dengan bunga KPR dan tabunganmu?</p>
+        <div class="module-meta">
+          <span>~20 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="200" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Menengah</span>
+        <h3>Kurs Rupiah & Perdagangan Global</h3>
+        <p class="module-desc">Mengapa nilai rupiah berubah setiap hari? Siapa yang menentukan kurs?</p>
+        <div class="module-meta">
+          <span>~25 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="300" style="border-top-color: var(--teal);">
+        <span class="module-level" style="background: #D1E7E1; color: var(--teal);">Menengah</span>
+        <h3>Aset Digital: Peluang dan Risiko</h3>
+        <p class="module-desc">Panduan objektif memahami kripto, stablecoin, dan DeFi dalam konteks regulasi Indonesia.</p>
+        <div class="module-meta">
+          <span>~30 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="0" style="border-top-color: var(--amber);">
+        <span class="module-level" style="background: #FEF3D0; color: #856404;">Pemula</span>
+        <h3>Mengelola Keuangan saat Inflasi Tinggi</h3>
+        <p class="module-desc">Strategi praktis melindungi nilai uangmu ketika harga barang naik.</p>
+        <div class="module-meta">
+          <span>~20 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="100" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Lanjutan</span>
+        <h3>Kebijakan Moneter untuk Semua Orang</h3>
+        <p class="module-desc">Bagaimana keputusan BI memengaruhi hidupmu? Dari harga sembako hingga cicilan motor.</p>
+        <div class="module-meta">
+          <span>~35 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+    </div>
+
+    <div class="calculator-box">
+      <h3>Kalkulator Inflasi Sederhana</h3>
+
+      <div class="calc-group">
+        <label for="currentValue">Nilai uang saat ini (Rp)</label>
+        <input type="number" id="currentValue" placeholder="Contoh: 1000000" value="1000000">
+      </div>
+
+      <div class="calc-group">
+        <label for="inflationRate">Tingkat inflasi (%/tahun)</label>
+        <input type="number" id="inflationRate" placeholder="Contoh: 2.84" value="2.84" step="0.01">
+      </div>
+
+      <div class="calc-group">
+        <label for="years">Berapa tahun ke depan?</label>
+        <input type="number" id="years" placeholder="Contoh: 5" value="5">
+      </div>
+
+      <button class="btn" style="background: var(--navy); color: var(--white); width: 100%;" onclick="calculateInflation()">Hitung</button>
+
+      <div class="calc-result">
+        <div class="calc-result-label">Nilai uang Rp 1.000.000 dalam 5 tahun:</div>
+        <div class="calc-result-value" id="futureValue">Rp 869.600</div>
+        <div class="calc-result-label" style="margin-top: 12px;">Kehilangan daya beli:</div>
+        <div class="calc-result-value" style="color: var(--red);" id="powerLoss">Rp 130.400</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: KEBIJAKAN TERBARU -->
+  <section id="kebijakan">
+    <div class="section-header">
+      <div class="section-label">SIARAN RESMI · BI & OJK</div>
+      <h2 class="section-title">Kebijakan & Pengumuman Terkini</h2>
+      <p class="section-subtitle">Semua informasi dalam bahasa yang mudah dipahami</p>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterNews('all')">Semua</button>
+      <button class="filter-tab" onclick="filterNews('bi')">Bank Indonesia</button>
+      <button class="filter-tab" onclick="filterNews('ojk')">OJK</button>
+      <button class="filter-tab" onclick="filterNews('bappebti')">Bappebti</button>
+    </div>
+
+    <div class="news-list">
+      <div class="news-card" data-delay="0" data-category="bi">
+        <div class="news-badge bi">BANK INDONESIA</div>
+        <div class="news-date">22 Mei 2025 · SIMULASI</div>
+        <h3>RDG Mei 2025: BI Pertahankan BI Rate di 6,25%</h3>
+        <p class="news-summary">
+          Bank Indonesia mempertahankan suku bunga acuan pada level 6,25% dalam Rapat Dewan Gubernur Mei 2025. Keputusan ini diambil untuk menjaga stabilitas nilai tukar rupiah di tengah ketidakpastian global.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="100" data-category="ojk">
+        <div class="news-badge ojk">OJK</div>
+        <div class="news-date">18 Mei 2025 · SIMULASI</div>
+        <h3>OJK Rilis Portal Data Terintegrasi Sektor Keuangan</h3>
+        <p class="news-summary">
+          OJK meluncurkan portal data dan metadata sektor jasa keuangan yang dapat diakses publik secara gratis. Portal ini menyediakan data agregat industri perbankan, pasar modal, dan industri keuangan non-bank.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="200" data-category="ojk">
+        <div class="news-badge ojk">OJK</div>
+        <div class="news-date">10 Mei 2025 · SIMULASI</div>
+        <h3>SNLIK 2025: Literasi Keuangan Nasional Capai 66,46%</h3>
+        <p class="news-summary">
+          Survei Nasional Literasi dan Inklusi Keuangan (SNLIK) 2025 mencatat indeks literasi keuangan nasional sebesar 66,46%. Namun kesenjangan antara perkotaan (70,89%) dan perdesaan (59,60%) masih menjadi tantangan utama.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="300" data-category="bappebti">
+        <div class="news-badge bappebti">BAPPEBTI</div>
+        <div class="news-date">5 Mei 2025 · SIMULASI</div>
+        <h3>Bappebti Tambah 8 Aset Kripto dalam Daftar Legal</h3>
+        <p class="news-summary">
+          Bappebti memperluas daftar aset kripto yang dapat diperdagangkan di bursa berjangka Indonesia. Total aset kripto legal kini berjumlah 501 jenis, termasuk beberapa token utilitas baru.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+    </div>
+
+    <div class="view-all-btn">
+      <button class="btn" style="border: 2px solid var(--navy); color: var(--navy); background: transparent;">Lihat Semua Kebijakan →</button>
+    </div>
+  </section>
+
+  <!-- SECTION: LAPORKAN & TANYA -->
+  <section id="laporkan">
+    <div class="section-header">
+      <div class="section-label">LAYANAN PUBLIK · TERPADU</div>
+      <h2 class="section-title">Ada Masalah? Kami Siap Membantu.</h2>
+      <p class="section-subtitle">Laporkan penipuan, ajukan pertanyaan, atau temukan jawaban dari ribuan FAQ yang tersedia.</p>
+    </div>
+
+    <div class="report-layout">
+      <div class="form-section">
+        <h3>Kirim Pertanyaan atau Laporan</h3>
+
+        <form id="reportForm" onsubmit="submitReport(event)">
+          <div class="form-group">
+            <label for="reportType">Jenis Laporan</label>
+            <select id="reportType" name="reportType">
+              <option>Pertanyaan Umum</option>
+              <option>Laporan Penipuan</option>
+              <option>Pengaduan Layanan</option>
+              <option>Informasi Regulasi</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reportName">Nama Lengkap</label>
+            <input type="text" id="reportName" name="reportName" placeholder="Masukkan nama Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reportEmail">Email</label>
+            <input type="email" id="reportEmail" name="reportEmail" placeholder="Masukkan email Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reportMessage">Pesan</label>
+            <textarea id="reportMessage" name="reportMessage" placeholder="Tuliskan pesan Anda..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--amber); color: var(--navy-dark);">Kirim</button>
+        </form>
+
+        <p class="form-note">⚠ Data kamu aman dan hanya digunakan untuk keperluan layanan EIMT. (Formulir ini adalah simulasi — tidak mengirim data nyata)</p>
+      </div>
+
+      <div class="contact-section">
+        <h3>Kontak Langsung</h3>
+
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="contact-icon">🏛</div>
+            <div class="contact-name">Bank Indonesia</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 131
+              <strong>Website:</strong> bi.go.id
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-icon">📋</div>
+            <div class="contact-name">Otoritas Jasa Keuangan</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 157
+              <strong>Website:</strong> ojk.go.id
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-icon">📡</div>
+            <div class="contact-name">Kementerian Kominfo</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 159
+              <strong>Website:</strong> kominfo.go.id
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: var(--text-xs); color: rgba(255,255,255,0.6); margin-top: 24px; line-height: 1.6;">
+          <strong>FAQ Cepat:</strong><br>
+          <strong>• Berapa lama respons?</strong> Maksimal 10 hari kerja untuk laporan tertulis. Hotline dijawab langsung pada hari kerja 08.00-17.00 WIB.<br>
+          <strong>• Laporan anonim?</strong> Kamu bisa memilih opsi anonim. Untuk pengaduan formal, identitas diperlukan.<br>
+          <strong>• EIMT platform resmi?</strong> Ini adalah prototype/demonstrasi. Platform resmi adalah bi.go.id dan ojk.go.id.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 12px;">EIMT</div>
+        <p style="font-size: var(--text-sm); line-height: 1.8; margin-bottom: 16px;">Platform informasi moneter terpadu untuk seluruh rakyat Indonesia.</p>
+        <div style="display: flex; gap: 8px; font-size: var(--text-xs);">
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">BI</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">OJK</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">Kominfo</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#hero">Beranda</a></li>
+          <li><a href="#data-moneter">Data Moneter</a></li>
+          <li><a href="#aset-digital">Aset Digital</a></li>
+          <li><a href="#literasi">Literasi</a></li>
+          <li><a href="#kebijakan">Kebijakan</a></li>
+          <li><a href="#laporkan">Laporkan & Tanya</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sumber Resmi</h4>
+        <ul>
+          <li><a href="https://bi.go.id" target="_blank">bi.go.id</a></li>
+          <li><a href="https://ojk.go.id" target="_blank">ojk.go.id</a></li>
+          <li><a href="https://bappebti.go.id" target="_blank">bappebti.go.id</a></li>
+          <li><a href="https://kominfo.go.id" target="_blank">kominfo.go.id</a></li>
+          <li><a href="https://ppatk.go.id" target="_blank">ppatk.go.id</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Aksesibilitas</h4>
+        <button class="footer-toggle" onclick="toggleContrast()">Mode Kontras Tinggi</button>
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button class="footer-toggle" onclick="adjustFontSize(-1)">A−</button>
+          <button class="footer-toggle" onclick="adjustFontSize(1)">A+</button>
+        </div>
+        <p style="font-size: var(--text-xs); margin-top: 12px;">Bahasa: <strong>Indonesia</strong> | English (soon)</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 EIMT · Prototype Konseptual · Bukan Situs Resmi Pemerintah</div>
+      <div class="footer-bottom-right">Dibuat sebagai demonstrasi inovasi kebijakan publik · Data adalah simulasi</div>
+    </div>
+
+    <p style="text-align: center; font-size: var(--text-xs); color: rgba(255,255,255,0.4); margin-top: 24px;">
+      Jika website tidak berfungsi: Hubungi BI di 131 atau OJK di 157
+    </p>
+  </footer>
+
+  <!-- MODAL: PORTAL INTERNAL -->
+  <div class="modal" id="portalModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closePortalModal()">×</button>
+      <div class="modal-icon">🔒</div>
+      <h2 class="modal-title">Portal Internal EIMT</h2>
+      <p class="modal-subtitle">Akses terbatas untuk otoritas BI, OJK, dan PPATK</p>
+
+      <form class="modal-form" onsubmit="submitPortalLogin(event)">
+        <input type="email" placeholder="nama@bi.go.id / ojk.go.id / ppatk.go.id" required>
+        <input type="password" placeholder="Password" required>
+        <input type="text" placeholder="Kode 2FA (6 digit)" maxlength="6" required>
+        <button type="submit">Masuk ke Dashboard</button>
+      </form>
+
+      <div class="modal-warning">
+        ⚠ Akses tidak sah ke sistem pemerintah merupakan pelanggaran hukum berdasarkan UU ITE. Semua upaya akses dicatat.
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

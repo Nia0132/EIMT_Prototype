@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EIMT — Ekosistem Informasi Moneter Terpadu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1B4F8A;
+      --navy-dark: #0F2D50;
+      --navy-light: #D6EAF8;
+      --amber: #E6A817;
+      --amber-light: #FEF3D0;
+      --teal: #0E6655;
+      --red: #C0392B;
+      --white: #FFFFFF;
+      --off-white: #F7FAFC;
+      --gray-100: #EDF2F7;
+      --gray-300: #CBD5E0;
+      --gray-500: #718096;
+      --gray-800: #2D3748;
+      --shadow: rgba(27, 79, 138, 0.10);
+
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: var(--gray-800);
+      background-color: var(--white);
+      line-height: 1.7;
+    }
+
+    /* ============ SCROLL INDICATORS ============ */
+    .scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--amber);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    /* ============ NAVBAR ============ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--white);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+      box-shadow: none;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--navy);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-brand {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand .brand-go {
+      font-size: var(--text-sm);
+      color: var(--amber);
+      margin-left: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--gray-800);
+      font-weight: 500;
+      font-size: var(--text-base);
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--amber);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .portal-btn {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: var(--text-base);
+    }
+
+    .portal-btn:hover {
+      background: var(--navy-dark);
+      transform: scale(1.02);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 6px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      transition: all 0.3s ease;
+    }
+
+    /* ============ HERO SECTION ============ */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 64px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      color: var(--white);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      animation: blink 0.7s infinite;
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .hero-subtitle {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1.15rem;
+      max-width: 560px;
+      margin: 24px auto 32px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1s forwards;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 32px 0;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.4s forwards;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.8s forwards;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      font-size: var(--text-base);
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--navy-dark);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(230, 168, 23, 0.3);
+    }
+
+    .btn-secondary {
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      color: var(--white);
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--white);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: var(--text-sm);
+      text-align: center;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ============ TICKER ============ */
+    .ticker {
+      background: var(--navy);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-content {
+      display: flex;
+      animation: scroll-ticker 35s linear infinite;
+      white-space: nowrap;
+      padding-right: 100%;
+    }
+
+    @keyframes scroll-ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      color: var(--white);
+      padding: 0 32px;
+      font-size: var(--text-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ticker-item span {
+      font-weight: 600;
+    }
+
+    .ticker-badge {
+      background: var(--amber);
+      color: var(--navy-dark);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: var(--text-xs);
+    }
+
+    .positive { color: var(--teal); }
+    .negative { color: #FF8A80; }
+
+    /* ============ SECTION GENERAL ============ */
+    section {
+      padding: 96px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--amber);
+      margin-top: 16px;
+    }
+
+    .section-subtitle {
+      font-size: var(--text-lg);
+      color: var(--gray-500);
+      margin-top: 16px;
+    }
+
+    /* ============ SECTION: DATA MONETER ============ */
+    #data-moneter {
+      background: var(--off-white);
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .data-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px;
+      border-left: 4px solid var(--navy);
+      box-shadow: 0 4px 24px var(--shadow);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(32px);
+    }
+
+    .data-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .data-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(27, 79, 138, 0.15);
+    }
+
+    .data-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .data-card h3 {
+      font-size: var(--text-base);
+      color: var(--gray-500);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .data-value {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .data-change {
+      font-size: var(--text-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .data-link {
+      font-size: var(--text-sm);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 12px;
+    }
+
+    .data-link:hover {
+      text-decoration: underline;
+    }
+
+    .disclaimer-box {
+      background: var(--amber-light);
+      border-left: 4px solid var(--amber);
+      padding: 20px;
+      border-radius: 8px;
+      font-size: var(--text-sm);
+      color: var(--gray-800);
+      line-height: 1.8;
+    }
+
+    /* ============ SECTION: ASET DIGITAL ============ */
+    #aset-digital {
+      background: linear-gradient(180deg, #F7FAFC 0%, #EBF5FB 100%);
+    }
+
+    .asset-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .accordion {
+      margin-bottom: 24px;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--gray-300);
+      padding: 16px 0;
+    }
+
+    .accordion-header {
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      user-select: none;
+    }
+
+    .accordion-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.35s ease;
+    }
+
+    .accordion-item.open .accordion-content {
+      max-height: 300px;
+      opacity: 1;
+    }
+
+    .accordion-text {
+      font-size: var(--text-sm);
+      color: var(--gray-800);
+      line-height: 1.8;
+      padding: 16px 0 0;
+    }
+
+    .status-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 24px var(--shadow);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(32px);
+    }
+
+    .status-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .status-badge {
+      display: inline-block;
+      background: var(--teal);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .status-content {
+      font-size: var(--text-sm);
+      line-height: 1.8;
+      color: var(--gray-800);
+    }
+
+    .status-content p {
+      margin-bottom: 8px;
+    }
+
+    .warning-card {
+      background: #FFF5F5;
+      border: 1px solid var(--red);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .warning-card h4 {
+      color: var(--red);
+      margin-bottom: 12px;
+      font-size: var(--text-base);
+    }
+
+    .warning-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .warning-card li {
+      font-size: var(--text-sm);
+      color: var(--gray-800);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .warning-card li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-weight: bold;
+    }
+
+    /* ============ SECTION: LITERASI ============ */
+    #literasi {
+      background: var(--off-white);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+
+    .stat-item {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .stat-number {
+      font-size: var(--text-5xl);
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .stat-label {
+      font-size: var(--text-base);
+      color: var(--gray-500);
+      margin-top: 8px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    .module-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 24px var(--shadow);
+      transition: all 0.3s ease;
+      border-top: 3px solid var(--navy);
+      opacity: 0;
+      transform: translateY(32px);
+    }
+
+    .module-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(27, 79, 138, 0.15);
+    }
+
+    .module-level {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      background: var(--navy-light);
+      color: var(--navy);
+    }
+
+    .module-card h3 {
+      font-size: var(--text-lg);
+      color: var(--navy);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .module-desc {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-300);
+      font-size: var(--text-xs);
+      color: var(--gray-500);
+    }
+
+    .module-card .btn {
+      width: 100%;
+      margin-top: 16px;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .calculator-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 24px var(--shadow);
+      max-width: 500px;
+      margin: 48px auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.3s forwards;
+    }
+
+    .calculator-box h3 {
+      font-size: var(--text-2xl);
+      color: var(--navy);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .calc-group {
+      margin-bottom: 20px;
+    }
+
+    .calc-group label {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--gray-800);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .calc-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: var(--text-base);
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+    }
+
+    .calc-group input:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27, 79, 138, 0.1);
+    }
+
+    .calc-result {
+      background: #F0FDF4;
+      border-left: 4px solid var(--teal);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 24px;
+      font-size: var(--text-sm);
+    }
+
+    .calc-result-label {
+      color: var(--gray-500);
+      font-size: var(--text-xs);
+      margin-bottom: 4px;
+    }
+
+    .calc-result-value {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      color: var(--teal);
+    }
+
+    /* ============ SECTION: KEBIJAKAN ============ */
+    #kebijakan {
+      background: linear-gradient(180deg, #EBF5FB 0%, #F7FAFC 100%);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .filter-tab {
+      padding: 10px 20px;
+      border: 1px solid var(--gray-300);
+      background: var(--white);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      transition: all 0.3s ease;
+    }
+
+    .filter-tab.active {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .filter-tab:hover {
+      border-color: var(--navy);
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .news-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      border-left: 4px solid var(--navy);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(32px);
+    }
+
+    .news-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .news-card:hover {
+      transform: translateX(4px);
+      background: var(--navy-light);
+    }
+
+    .news-badge {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .news-badge.bi { background: var(--navy); }
+    .news-badge.ojk { background: var(--teal); }
+    .news-badge.bappebti { background: #E8890F; }
+
+    .news-date {
+      font-size: var(--text-xs);
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .news-card h3 {
+      font-size: var(--text-lg);
+      color: var(--navy);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .news-summary {
+      font-size: var(--text-sm);
+      color: var(--gray-800);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .news-link {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+
+    .view-all-btn {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ============ SECTION: LAPORKAN & TANYA ============ */
+    #laporkan {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    #laporkan .section-label {
+      color: var(--amber);
+    }
+
+    #laporkan .section-title {
+      color: var(--white);
+    }
+
+    #laporkan .section-subtitle {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .report-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .form-section {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .form-section h3 {
+      color: var(--white);
+      margin-bottom: 24px;
+      font-size: var(--text-xl);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 8px;
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: var(--text-base);
+      transition: all 0.2s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(230, 168, 23, 0.1);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-note {
+      font-size: var(--text-xs);
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: var(--red);
+    }
+
+    .form-error {
+      color: #FF8A80;
+      font-size: var(--text-xs);
+      margin-top: 6px;
+    }
+
+    .contact-section {
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.2s forwards;
+    }
+
+    .contact-section h3 {
+      color: var(--white);
+      margin-bottom: 24px;
+      font-size: var(--text-xl);
+    }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-name {
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .contact-info {
+      font-size: var(--text-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255, 255, 255, 0.75);
+      padding: 64px 48px 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      margin-bottom: 20px;
+      font-size: var(--text-lg);
+      font-weight: 700;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.3s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--amber);
+    }
+
+    .footer-toggle-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.75);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: var(--text-xs);
+      transition: all 0.2s ease;
+    }
+
+    .footer-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .footer-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .footer-bottom-right {
+      text-align: right;
+    }
+
+    /* ============ MODAL ============ */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray-500);
+      transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--gray-800);
+    }
+
+    .modal-icon {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .modal-subtitle {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-form input {
+      padding: 12px;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: var(--text-base);
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+    }
+
+    .modal-form input:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27, 79, 138, 0.1);
+    }
+
+    .modal-form button {
+      padding: 14px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 12px;
+    }
+
+    .modal-form button:hover {
+      background: var(--navy-dark);
+    }
+
+    .modal-warning {
+      background: rgba(192, 57, 43, 0.05);
+      border-left: 4px solid var(--red);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: var(--text-xs);
+      color: var(--red);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    /* ============ BACK TO TOP BUTTON ============ */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .back-to-top:hover {
+      background: var(--navy-dark);
+      transform: scale(1.1);
+    }
+
+    /* ============ STATUS BANNER ============ */
+    .status-banner {
+      display: none;
+      padding: 12px 24px;
+      font-size: var(--text-sm);
+      background: var(--amber-light);
+      color: var(--navy-dark);
+      border-bottom: 1px solid var(--amber);
+      text-align: center;
+      margin-top: 64px;
+    }
+
+    .status-banner.degraded {
+      display: block;
+      background: var(--amber-light);
+    }
+
+    .status-banner.maintenance {
+      display: block;
+      background: rgba(192, 57, 43, 0.1);
+      color: var(--red);
+      border-bottom-color: var(--red);
+    }
+
+    .cache-badge {
+      display: inline-block;
+      font-size: var(--text-xs);
+      background: var(--amber);
+      color: var(--navy-dark);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--white);
+        padding: 24px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        gap: 16px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      section {
+        padding: 64px 24px;
+      }
+
+      .hero {
+        margin-top: 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+      }
+
+      .asset-layout,
+      .report-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .data-grid,
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer-bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom-right {
+        text-align: left;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+      }
+
+      .modal-box {
+        padding: 32px 24px;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        bottom: 24px;
+        right: 24px;
+      }
+
+      .ticker-item {
+        padding: 0 16px;
+        font-size: var(--text-xs);
+      }
+
+      @keyframes scroll-ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: var(--text-2xl);
+      }
+
+      .hero-cta {
+        gap: 12px;
+      }
+
+      .hero-cta .btn {
+        padding: 12px 20px;
+        font-size: var(--text-sm);
+      }
+
+      .stat-number {
+        font-size: var(--text-4xl);
+      }
+
+      .filter-tabs {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .filter-tab {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-bar"></div>
+
+  <!-- NAVBAR -->
+  <nav role="navigation" aria-label="Navigasi utama">
+    <div class="nav-brand">EIMT <span class="brand-go">go.id</span></div>
+    <button class="hamburger" aria-label="Buka menu navigasi" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#data-moneter" class="nav-link">Data Moneter</a></li>
+      <li><a href="#aset-digital" class="nav-link">Aset Digital</a></li>
+      <li><a href="#literasi" class="nav-link">Literasi</a></li>
+      <li><a href="#kebijakan" class="nav-link">Kebijakan</a></li>
+      <li><a href="#laporkan" class="nav-link">Laporkan</a></li>
+    </ul>
+    <button class="portal-btn" id="portalBtn" aria-label="Masuk ke portal internal">
+      Portal Internal
+    </button>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1>
+        <span id="typewriterText"></span><span class="typewriter-cursor">|</span>
+      </h1>
+      <p class="hero-subtitle">Informasi moneter resmi dari Bank Indonesia, OJK, dan Kominfo. Merata. Real-time. Terpercaya.</p>
+      <div class="hero-badges">
+        <div class="badge">🏛 Bank Indonesia</div>
+        <div class="badge">📋 OJK</div>
+        <div class="badge">📡 Kominfo</div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="document.getElementById('data-moneter').scrollIntoView({behavior:'smooth'})">Lihat Data Sekarang</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('literasi').scrollIntoView({behavior:'smooth'})">Pelajari EIMT</button>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      Gulir ke bawah ↓
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-content">
+      <div class="ticker-item">
+        <span class="ticker-badge">DATA SIMULASI</span>
+      </div>
+      <div class="ticker-item">
+        <span>USD/IDR: Rp 16.245</span>
+        <span class="negative">▼ -0,12%</span>
+      </div>
+      <div class="ticker-item">
+        <span>BI Rate: 6,25%</span>
+        <span>→</span>
+      </div>
+      <div class="ticker-item">
+        <span>Inflasi Mei 2025: 2,84% (yoy)</span>
+      </div>
+      <div class="ticker-item">
+        <span>Cadangan Devisa: USD 144,0 Miliar</span>
+      </div>
+      <div class="ticker-item">
+        <span>EUR/IDR: Rp 17.680</span>
+        <span class="positive">▲ +0,08%</span>
+      </div>
+      <div class="ticker-item">
+        <span>SGD/IDR: Rp 12.105</span>
+        <span class="negative">▼ -0,05%</span>
+      </div>
+      <div class="ticker-item">
+        <span>Diperbarui: SIMULASI</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="ticker-item">
+        <span class="ticker-badge">DATA SIMULASI</span>
+      </div>
+      <div class="ticker-item">
+        <span>USD/IDR: Rp 16.245</span>
+        <span class="negative">▼ -0,12%</span>
+      </div>
+      <div class="ticker-item">
+        <span>BI Rate: 6,25%</span>
+        <span>→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner" id="statusBanner"></div>
+
+  <!-- SECTION: DATA MONETER -->
+  <section id="data-moneter">
+    <div class="section-header">
+      <div class="section-label">DATA RESMI · BANK INDONESIA</div>
+      <h2 class="section-title">Indikator Moneter Utama</h2>
+      <p class="section-subtitle">Data simulasi · Diperbarui setiap hari kerja</p>
+    </div>
+
+    <div class="data-grid">
+      <div class="data-card" data-delay="0" data-source="live">
+        <div class="data-icon">💵</div>
+        <h3>Kurs USD/IDR</h3>
+        <div class="data-value">Rp 16.245</div>
+        <div class="data-change">
+          <span class="negative">▼ -0,12%</span>
+          <span>dari kemarin</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="100" data-source="live">
+        <div class="data-icon">📊</div>
+        <h3>BI Rate (Suku Bunga Acuan)</h3>
+        <div class="data-value">6,25%</div>
+        <div class="data-change">
+          <span>→ Tidak berubah</span>
+        </div>
+        <p style="font-size: var(--text-xs); color: var(--gray-500); margin: 8px 0;">Keputusan RDG Mei 2025</p>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="200" data-source="live">
+        <div class="data-icon">📈</div>
+        <h3>Inflasi (yoy)</h3>
+        <div class="data-value">2,84%</div>
+        <div class="data-change">
+          <span class="positive">▲ +0,11%</span>
+          <span>dari bulan lalu</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+
+      <div class="data-card" data-delay="300" data-source="live">
+        <div class="data-icon">🏦</div>
+        <h3>Cadangan Devisa</h3>
+        <div class="data-value">USD 144,0 Miliar</div>
+        <div class="data-change">
+          <span class="positive">▲ +USD 0,8 Miliar</span>
+          <span>dari bulan lalu</span>
+        </div>
+        <a href="#" class="data-link">Lihat historis →</a>
+      </div>
+    </div>
+
+    <div class="disclaimer-box">
+      ⚠ Seluruh data pada halaman ini adalah simulasi untuk keperluan demonstrasi. Data resmi tersedia di <strong>bi.go.id</strong> dan <strong>ojk.go.id</strong>.
+    </div>
+  </section>
+
+  <!-- SECTION: ASET DIGITAL -->
+  <section id="aset-digital">
+    <div class="section-header">
+      <div class="section-label">REGULASI · OJK & BAPPEBTI</div>
+      <h2 class="section-title">Aset Digital di Indonesia</h2>
+      <p class="section-subtitle">Pahami regulasi sebelum berinvestasi</p>
+    </div>
+
+    <div class="asset-layout">
+      <div class="form-section">
+        <h3>Pertanyaan Umum</h3>
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apa itu aset kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Aset kripto adalah aset digital yang menggunakan kriptografi untuk mengamankan transaksi. Di Indonesia, aset kripto diatur oleh Bappebti sebagai komoditas digital, bukan alat pembayaran yang sah.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apakah kripto legal di Indonesia?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Perdagangan aset kripto legal di Indonesia melalui bursa yang terdaftar di Bappebti. Namun, kripto BUKAN alat pembayaran sah. Bank Indonesia melarang penggunaan kripto sebagai alat bayar.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apa risiko berinvestasi kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Volatilitas tinggi, risiko kehilangan seluruh modal, potensi penipuan, dan tidak ada jaminan pemerintah. Selalu gunakan bursa terdaftar dan jangan investasikan dana yang tidak mampu hilang.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Bagaimana cara cek legalitas bursa kripto?</span>
+              <span class="accordion-icon">+</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-text">
+                Cek daftar bursa kripto legal di situs resmi Bappebti (bappebti.go.id). Jangan percaya platform yang tidak terdaftar.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <div class="status-card">
+          <div class="status-badge">DIATUR</div>
+          <div class="status-content">
+            <p><strong>Regulator:</strong> Bappebti (perdagangan) · OJK (aset keuangan)</p>
+            <p><strong>Bursa Terdaftar:</strong> 12 platform (simulasi)</p>
+            <p><strong>Aset Legal:</strong> 501 jenis aset (simulasi)</p>
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 16px 0;">
+            <p style="color: var(--red); margin-top: 16px; font-weight: 600;">
+              ⚠ BUKAN alat pembayaran sah di Indonesia (UU No. 7 Tahun 2011)
+            </p>
+          </div>
+        </div>
+
+        <div class="warning-card">
+          <h4>🚨 Ciri-ciri Penipuan Kripto</h4>
+          <ul>
+            <li>Menjanjikan keuntungan pasti</li>
+            <li>Tidak terdaftar di Bappebti</li>
+            <li>Tekanan untuk segera bergabung</li>
+            <li>Skema referral tidak jelas</li>
+          </ul>
+          <button class="btn btn-primary" style="width: 100%; margin-top: 16px; background: var(--red); color: white;" onclick="document.getElementById('laporkan').scrollIntoView({behavior:'smooth'})">Laporkan ke OJK</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LITERASI KEUANGAN -->
+  <section id="literasi">
+    <div class="section-header">
+      <div class="section-label">PROGRAM NASIONAL · OJK GENCARKAN</div>
+      <h2 class="section-title">Tingkatkan Literasi Keuanganmu</h2>
+      <p class="section-subtitle">Dari dasar hingga mahir, belajar kapan saja dan di mana saja</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-number">66,46%</div>
+        <div class="stat-label">Literasi Nasional (SNLIK 2025 sim.)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Modul Tersedia</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Gratis</div>
+        <div class="stat-label">100% Tanpa Biaya</div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card" data-delay="0" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Pemula</span>
+        <h3>Dasar-Dasar Inflasi</h3>
+        <p class="module-desc">Apa itu inflasi, bagaimana mengukurnya, dan apa dampaknya pada daya beli kamu sehari-hari.</p>
+        <div class="module-meta">
+          <span>~15 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="100" style="border-top-color: var(--teal);">
+        <span class="module-level" style="background: #D1E7E1; color: var(--teal);">Pemula</span>
+        <h3>Memahami Suku Bunga BI</h3>
+        <p class="module-desc">Kenapa BI Rate naik turun? Apa hubungannya dengan bunga KPR dan tabunganmu?</p>
+        <div class="module-meta">
+          <span>~20 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="200" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Menengah</span>
+        <h3>Kurs Rupiah & Perdagangan Global</h3>
+        <p class="module-desc">Mengapa nilai rupiah berubah setiap hari? Siapa yang menentukan kurs?</p>
+        <div class="module-meta">
+          <span>~25 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="300" style="border-top-color: var(--teal);">
+        <span class="module-level" style="background: #D1E7E1; color: var(--teal);">Menengah</span>
+        <h3>Aset Digital: Peluang dan Risiko</h3>
+        <p class="module-desc">Panduan objektif memahami kripto, stablecoin, dan DeFi dalam konteks regulasi Indonesia.</p>
+        <div class="module-meta">
+          <span>~30 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="0" style="border-top-color: var(--amber);">
+        <span class="module-level" style="background: #FEF3D0; color: #856404;">Pemula</span>
+        <h3>Mengelola Keuangan saat Inflasi Tinggi</h3>
+        <p class="module-desc">Strategi praktis melindungi nilai uangmu ketika harga barang naik.</p>
+        <div class="module-meta">
+          <span>~20 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+
+      <div class="module-card" data-delay="100" style="border-top-color: var(--navy);">
+        <span class="module-level" style="background: #D6EAF8; color: var(--navy);">Lanjutan</span>
+        <h3>Kebijakan Moneter untuk Semua Orang</h3>
+        <p class="module-desc">Bagaimana keputusan BI memengaruhi hidupmu? Dari harga sembako hingga cicilan motor.</p>
+        <div class="module-meta">
+          <span>~35 menit</span>
+        </div>
+        <button class="btn">Mulai Belajar</button>
+      </div>
+    </div>
+
+    <div class="calculator-box">
+      <h3>Kalkulator Inflasi Sederhana</h3>
+
+      <div class="calc-group">
+        <label for="currentValue">Nilai uang saat ini (Rp)</label>
+        <input type="number" id="currentValue" placeholder="Contoh: 1000000" value="1000000">
+      </div>
+
+      <div class="calc-group">
+        <label for="inflationRate">Tingkat inflasi (%/tahun)</label>
+        <input type="number" id="inflationRate" placeholder="Contoh: 2.84" value="2.84" step="0.01">
+      </div>
+
+      <div class="calc-group">
+        <label for="years">Berapa tahun ke depan?</label>
+        <input type="number" id="years" placeholder="Contoh: 5" value="5">
+      </div>
+
+      <button class="btn" style="background: var(--navy); color: var(--white); width: 100%;" onclick="calculateInflation()">Hitung</button>
+
+      <div class="calc-result">
+        <div class="calc-result-label">Nilai uang Rp 1.000.000 dalam 5 tahun:</div>
+        <div class="calc-result-value" id="futureValue">Rp 869.600</div>
+        <div class="calc-result-label" style="margin-top: 12px;">Kehilangan daya beli:</div>
+        <div class="calc-result-value" style="color: var(--red);" id="powerLoss">Rp 130.400</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: KEBIJAKAN TERBARU -->
+  <section id="kebijakan">
+    <div class="section-header">
+      <div class="section-label">SIARAN RESMI · BI & OJK</div>
+      <h2 class="section-title">Kebijakan & Pengumuman Terkini</h2>
+      <p class="section-subtitle">Semua informasi dalam bahasa yang mudah dipahami</p>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterNews('all')">Semua</button>
+      <button class="filter-tab" onclick="filterNews('bi')">Bank Indonesia</button>
+      <button class="filter-tab" onclick="filterNews('ojk')">OJK</button>
+      <button class="filter-tab" onclick="filterNews('bappebti')">Bappebti</button>
+    </div>
+
+    <div class="news-list">
+      <div class="news-card" data-delay="0" data-category="bi">
+        <div class="news-badge bi">BANK INDONESIA</div>
+        <div class="news-date">22 Mei 2025 · SIMULASI</div>
+        <h3>RDG Mei 2025: BI Pertahankan BI Rate di 6,25%</h3>
+        <p class="news-summary">
+          Bank Indonesia mempertahankan suku bunga acuan pada level 6,25% dalam Rapat Dewan Gubernur Mei 2025. Keputusan ini diambil untuk menjaga stabilitas nilai tukar rupiah di tengah ketidakpastian global.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="100" data-category="ojk">
+        <div class="news-badge ojk">OJK</div>
+        <div class="news-date">18 Mei 2025 · SIMULASI</div>
+        <h3>OJK Rilis Portal Data Terintegrasi Sektor Keuangan</h3>
+        <p class="news-summary">
+          OJK meluncurkan portal data dan metadata sektor jasa keuangan yang dapat diakses publik secara gratis. Portal ini menyediakan data agregat industri perbankan, pasar modal, dan industri keuangan non-bank.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="200" data-category="ojk">
+        <div class="news-badge ojk">OJK</div>
+        <div class="news-date">10 Mei 2025 · SIMULASI</div>
+        <h3>SNLIK 2025: Literasi Keuangan Nasional Capai 66,46%</h3>
+        <p class="news-summary">
+          Survei Nasional Literasi dan Inklusi Keuangan (SNLIK) 2025 mencatat indeks literasi keuangan nasional sebesar 66,46%. Namun kesenjangan antara perkotaan (70,89%) dan perdesaan (59,60%) masih menjadi tantangan utama.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+
+      <div class="news-card" data-delay="300" data-category="bappebti">
+        <div class="news-badge bappebti">BAPPEBTI</div>
+        <div class="news-date">5 Mei 2025 · SIMULASI</div>
+        <h3>Bappebti Tambah 8 Aset Kripto dalam Daftar Legal</h3>
+        <p class="news-summary">
+          Bappebti memperluas daftar aset kripto yang dapat diperdagangkan di bursa berjangka Indonesia. Total aset kripto legal kini berjumlah 501 jenis, termasuk beberapa token utilitas baru.
+        </p>
+        <a href="#" class="news-link">Baca selengkapnya →</a>
+      </div>
+    </div>
+
+    <div class="view-all-btn">
+      <button class="btn" style="border: 2px solid var(--navy); color: var(--navy); background: transparent;">Lihat Semua Kebijakan →</button>
+    </div>
+  </section>
+
+  <!-- SECTION: LAPORKAN & TANYA -->
+  <section id="laporkan">
+    <div class="section-header">
+      <div class="section-label">LAYANAN PUBLIK · TERPADU</div>
+      <h2 class="section-title">Ada Masalah? Kami Siap Membantu.</h2>
+      <p class="section-subtitle">Laporkan penipuan, ajukan pertanyaan, atau temukan jawaban dari ribuan FAQ yang tersedia.</p>
+    </div>
+
+    <div class="report-layout">
+      <div class="form-section">
+        <h3>Kirim Pertanyaan atau Laporan</h3>
+
+        <form id="reportForm" onsubmit="submitReport(event)">
+          <div class="form-group">
+            <label for="reportType">Jenis Laporan</label>
+            <select id="reportType" name="reportType">
+              <option>Pertanyaan Umum</option>
+              <option>Laporan Penipuan</option>
+              <option>Pengaduan Layanan</option>
+              <option>Informasi Regulasi</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reportName">Nama Lengkap</label>
+            <input type="text" id="reportName" name="reportName" placeholder="Masukkan nama Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reportEmail">Email</label>
+            <input type="email" id="reportEmail" name="reportEmail" placeholder="Masukkan email Anda" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reportMessage">Pesan</label>
+            <textarea id="reportMessage" name="reportMessage" placeholder="Tuliskan pesan Anda..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--amber); color: var(--navy-dark);">Kirim</button>
+        </form>
+
+        <p class="form-note">⚠ Data kamu aman dan hanya digunakan untuk keperluan layanan EIMT. (Formulir ini adalah simulasi — tidak mengirim data nyata)</p>
+      </div>
+
+      <div class="contact-section">
+        <h3>Kontak Langsung</h3>
+
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="contact-icon">🏛</div>
+            <div class="contact-name">Bank Indonesia</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 131
+              <strong>Website:</strong> bi.go.id
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-icon">📋</div>
+            <div class="contact-name">Otoritas Jasa Keuangan</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 157
+              <strong>Website:</strong> ojk.go.id
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-icon">📡</div>
+            <div class="contact-name">Kementerian Kominfo</div>
+            <div class="contact-info">
+              <strong>Hotline:</strong> 159
+              <strong>Website:</strong> kominfo.go.id
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: var(--text-xs); color: rgba(255,255,255,0.6); margin-top: 24px; line-height: 1.6;">
+          <strong>FAQ Cepat:</strong><br>
+          <strong>• Berapa lama respons?</strong> Maksimal 10 hari kerja untuk laporan tertulis. Hotline dijawab langsung pada hari kerja 08.00-17.00 WIB.<br>
+          <strong>• Laporan anonim?</strong> Kamu bisa memilih opsi anonim. Untuk pengaduan formal, identitas diperlukan.<br>
+          <strong>• EIMT platform resmi?</strong> Ini adalah prototype/demonstrasi. Platform resmi adalah bi.go.id dan ojk.go.id.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 12px;">EIMT</div>
+        <p style="font-size: var(--text-sm); line-height: 1.8; margin-bottom: 16px;">Platform informasi moneter terpadu untuk seluruh rakyat Indonesia.</p>
+        <div style="display: flex; gap: 8px; font-size: var(--text-xs);">
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">BI</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">OJK</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">Kominfo</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#hero">Beranda</a></li>
+          <li><a href="#data-moneter">Data Moneter</a></li>
+          <li><a href="#aset-digital">Aset Digital</a></li>
+          <li><a href="#literasi">Literasi</a></li>
+          <li><a href="#kebijakan">Kebijakan</a></li>
+          <li><a href="#laporkan">Laporkan & Tanya</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sumber Resmi</h4>
+        <ul>
+          <li><a href="https://bi.go.id" target="_blank">bi.go.id</a></li>
+          <li><a href="https://ojk.go.id" target="_blank">ojk.go.id</a></li>
+          <li><a href="https://bappebti.go.id" target="_blank">bappebti.go.id</a></li>
+          <li><a href="https://kominfo.go.id" target="_blank">kominfo.go.id</a></li>
+          <li><a href="https://ppatk.go.id" target="_blank">ppatk.go.id</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Aksesibilitas</h4>
+        <button class="footer-toggle" onclick="toggleContrast()">Mode Kontras Tinggi</button>
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button class="footer-toggle" onclick="adjustFontSize(-1)">A−</button>
+          <button class="footer-toggle" onclick="adjustFontSize(1)">A+</button>
+        </div>
+        <p style="font-size: var(--text-xs); margin-top: 12px;">Bahasa: <strong>Indonesia</strong> | English (soon)</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 EIMT · Prototype Konseptual · Bukan Situs Resmi Pemerintah</div>
+      <div class="footer-bottom-right">Dibuat sebagai demonstrasi inovasi kebijakan publik · Data adalah simulasi</div>
+    </div>
+
+    <p style="text-align: center; font-size: var(--text-xs); color: rgba(255,255,255,0.4); margin-top: 24px;">
+      Jika website tidak berfungsi: Hubungi BI di 131 atau OJK di 157
+    </p>
+  </footer>
+
+  <!-- MODAL: PORTAL INTERNAL -->
+  <div class="modal" id="portalModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closePortalModal()">×</button>
+      <div class="modal-icon">🔒</div>
+      <h2 class="modal-title">Portal Internal EIMT</h2>
+      <p class="modal-subtitle">Akses terbatas untuk otoritas BI, OJK, dan PPATK</p>
+
+      <form class="modal-form" onsubmit="submitPortalLogin(event)">
+        <input type="email" placeholder="nama@bi.go.id / ojk.go.id / ppatk.go.id" required>
+        <input type="password" placeholder="Password" required>
+        <input type="text" placeholder="Kode 2FA (6 digit)" maxlength="6" required>
+        <button type="submit">Masuk ke Dashboard</button>
+      </form>
+
+      <div class="modal-warning">
+        ⚠ Akses tidak sah ke sistem pemerintah merupakan pelanggaran hukum berdasarkan UU ITE. Semua upaya akses dicatat.
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()">↑</button>
+
+  <script>
+    // ============ TYPEWRITER ANIMATION ============
+    const phrases = [
+      "Selamat datang di EIMT.",
+      "Satu portal.",
+      "Satu kepercayaan.",
+      "Ekosistem Informasi Moneter Terpadu."
+    ];
+    const delays = [800, 600, 600, 2000];
+    const typeSpeed = 55;
+    const deleteSpeed = 30;
+
+    async function typewriterAnimation() {
+      const textElement = document.getElementById('typewriterText');
+
+      for (let phraseIndex = 0; phraseIndex < phrases.length; phraseIndex++) {
+        const phrase = phrases[phraseIndex];
+
+        // Type
+        for (let i = 0; i < phrase.length; i++) {
+          textElement.textContent = phrase.substring(0, i + 1);
+          await new Promise(resolve => setTimeout(resolve, typeSpeed));
+        }
+
+        // Wait
+        await new Promise(resolve => setTimeout(resolve, delays[phraseIndex]));
+
+        // Delete (but not for last phrase)
+        if (phraseIndex < phrases.length - 1) {
+          for (let i = phrase.length; i > 0; i--) {
+            textElement.textContent = phrase.substring(0, i - 1);
+            await new Promise(resolve => setTimeout(resolve, deleteSpeed));
+          }
+        }
+      }
+    }
+
+    // ============ INTERSECTION OBSERVER FOR FADE-IN ============
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Stagger animation for child cards
+          const cards = entry.target.querySelectorAll('[data-delay]');
+          cards.forEach(card => {
+            const delay = parseInt(card.dataset.delay) || 0;
+            setTimeout(() => {
+              card.style.animation = `fadeIn 0.6s ease forwards`;
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          });
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.section-header, .data-card, .status-card, .module-card, .news-card, .calculator-box').forEach(el => {
+      observer.observe(el);
+    });
+
+    // ============ NAVBAR SCROLL BEHAVIOR ============
+    let lastScroll = 0;
+    const progressBar = document.querySelector('.scroll-progress-bar');
+    const navbar = document.querySelector('nav');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+
+      progressBar.style.width = scrollPercent + '%';
+
+      if (scrollTop > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      updateActiveNav();
+      updateBackToTopButton();
+    });
+
+    // ============ ACTIVE NAV LINK ============
+    function updateActiveNav() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // ============ BACK TO TOP BUTTON ============
+    function updateBackToTopButton() {
+      const btn = document.getElementById('backToTopBtn');
+      if (window.scrollY > 500) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // ============ HAMBURGER MENU ============
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // ============ ACCORDION ============
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        item.classList.toggle('open');
+
+        // Close other items
+        document.querySelectorAll('.accordion-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('open');
+          }
+        });
+      });
+    });
+
+    // ============ INFLATION CALCULATOR ============
+    function calculateInflation() {
+      const currentValue = parseFloat(document.getElementById('currentValue').value) || 0;
+      const inflationRate = parseFloat(document.getElementById('inflationRate').value) || 0;
+      const years = parseInt(document.getElementById('years').value) || 0;
+
+      const futureValue = currentValue / Math.pow(1 + inflationRate / 100, years);
+      const powerLoss = currentValue - futureValue;
+
+      document.getElementById('futureValue').textContent = 'Rp ' + Math.round(futureValue).toLocaleString('id-ID');
+      document.getElementById('powerLoss').textContent = 'Rp ' + Math.round(powerLoss).toLocaleString('id-ID');
+    }
+
+    // Listen to calculator inputs for real-time calculation
+    ['currentValue', 'inflationRate', 'years'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateInflation);
+    });
+
+    // Initial calculation
+    calculateInflation();
+
+    // ============ FILTER NEWS ============
+    function filterNews(category) {
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      document.querySelectorAll('.news-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, 10);
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('visible');
+        }
+      });
+    }
+
+    // ============ MODAL: PORTAL INTERNAL ============
+    const portalBtn = document.getElementById('portalBtn');
+    const portalModal = document.getElementById('portalModal');
+
+    portalBtn.addEventListener('click', () => {
+      portalModal.classList.add('active');
+    });
+
+    function closePortalModal() {
+      portalModal.classList.remove('active');
+    }
+
+    portalModal.addEventListener('click', (e) => {
+      if (e.target === portalModal) {
+        closePortalModal();
+      }
+    });
+
+    function submitPortalLogin(event) {
+      event.preventDefault();
+      alert('Ini adalah prototype. Akses portal internal tidak tersedia pada versi demonstrasi ini.');
+      closePortalModal();
+    }
+
+    // ============ REPORT FORM ============
+    function submitReport(event) {
+      event.preventDefault();
+
+      const form = document.getElementById('reportForm');
+      let isValid = true;
+
+      // Simple validation
+      const name = document.getElementById('reportName').value.trim();
+      const email = document.getElementById('reportEmail').value.trim();
+      const message = document.getElementById('reportMessage').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Harap isi semua field');
+        return;
+      }
+
+      alert('✓ Pesan berhasil dikirim. (Ini adalah simulasi)');
+      form.reset();
+    }
+
+    // ============ ACCESSIBILITY: FONT SIZE ADJUSTMENT ============
+    let fontSizeOffset = 0;
+
+    function adjustFontSize(delta) {
+      fontSizeOffset += delta * 2;
+      document.body.style.fontSize = (16 + fontSizeOffset) + 'px';
+    }
+
+    // ============ ACCESSIBILITY: HIGH CONTRAST MODE ============
+    function toggleContrast() {
+      document.body.classList.toggle('high-contrast');
+      if (document.body.classList.contains('high-contrast')) {
+        // Store preference
+        localStorage.setItem('eimt-contrast', 'on');
+        // Apply high contrast styles
+        document.body.style.filter = 'contrast(1.2)';
+      } else {
+        localStorage.setItem('eimt-contrast', 'off');
+        document.body.style.filter = 'contrast(1)';
+      }
+    }
+
+    // Load accessibility preferences
+    if (localStorage.getItem('eimt-contrast') === 'on') {
+      document.body.style.filter = 'contrast(1.2)';
+      document.body.classList.add('high-contrast');
+    }
+
+    // ============ INITIALIZE ============
+    window.addEventListener('DOMContentLoaded', () => {
+      typewriterAnimation();
+      calculateInflation();
+    });
+
+    // Smooth scroll offset for fixed navbar
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const offsetTop = target.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
